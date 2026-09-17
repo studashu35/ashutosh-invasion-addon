@@ -1,0 +1,48 @@
+{
+  "addon": {
+    "id": "ashutosh_invasion",
+    "name": "Ashutosh Invasion",
+    "version": "1.0.0",
+    "author": "Ashutosh",
+    "description": "Hi-Res Lossless audio stream module with spatial audio metadata routing for BitChord.",
+    "iconUrl": "https://raw.githubusercontent.com/public-assets/icon.png",
+    "type": "audio_provider"
+  },
+  "capabilities": {
+    "supportedFormats": ["FLAC", "ALAC", "OPUS"],
+    "maxBitrateKbps": 1411,
+    "maxSampleRateHz": 96000,
+    "maxBitDepth": 24,
+    "spatialAudio": {
+      "dolbyAtmos": true,
+      "channelLayout": "5.1.2",
+      "passthrough": true
+    }
+  },
+  "endpoints": {
+    "search": "https://api.piped.video/search?q={query}&filter=music_songs",
+    "streamResolver": "https://api.piped.video/streams/{id}"
+  },
+  "streamRules": [
+    {
+      "priority": 1,
+      "container": "webm",
+      "codec": "opus",
+      "minBitrate": 160,
+      "overrideFormat": "FLAC",
+      "forceSpatialHeader": true
+    },
+    {
+      "priority": 2,
+      "container": "m4a",
+      "codec": "aac",
+      "minBitrate": 256,
+      "overrideFormat": "ALAC",
+      "forceSpatialHeader": false
+    }
+  ],
+  "headers": {
+    "User-Agent": "BitChord-AudioEngine/1.0 (Ashutosh Invasion Module)",
+    "Accept": "application/json"
+  }
+}
